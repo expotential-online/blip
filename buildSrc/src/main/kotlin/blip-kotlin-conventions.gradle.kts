@@ -15,7 +15,7 @@ dependencies {
 }
 
 kotlin {
-  jvmToolchain(20)
+  jvmToolchain(19)
 }
 
 tasks.jacocoTestReport {
