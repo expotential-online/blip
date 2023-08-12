@@ -7,6 +7,7 @@ plugins {
 dependencies {
   implementation(libs.jakarta.persistence)
   implementation(libs.kotlin.noarg)
+  implementation(libs.starter.validation)
 }
 
 sonarqube {
