@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories
 
 @SpringBootApplication
 @EnableJpaRepositories
-@EntityScan("blip.model")
+@EntityScan("blip")
 class BlipWebService
 
 fun main(args: Array<String>) {

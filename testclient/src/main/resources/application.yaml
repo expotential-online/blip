@@ -1,0 +1,36 @@
+server:
+  port: 9080
+spring:
+  application:
+    name: blip-testclient
+  boot:
+    admin:
+      client:
+        url: http://localhost:8081
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  info:
+    env:
+      enabled: true
+blip:
+  keycloak:
+    url: http://localhost:9001
+    realm: blip
+    client_id: blip-testclient
+    secret: mxwuN7MHAf3zHEOxM6BpYeM3DQTWWGvq
+  webservice:
+    url: http://localhost:8080
+  test_client:
+    users:
+      admin_user:
+        username: test_client_admin_user
+        password: test_client_admin_user
+      non_admin_user1:
+        username: test_client_non_admin_user1
+        password: test_client_non_admin_user1
+      non_admin_user2:
+        username: test_client_non_admin_user2
+        password: test_client_non_admin_user2

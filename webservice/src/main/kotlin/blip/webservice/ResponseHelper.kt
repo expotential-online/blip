@@ -6,10 +6,12 @@ import java.net.URI
 
 object ResponseHelper {
 
-  fun <T> creationResponse(resource: T, idExtractor: (T) -> Long?): ResponseEntity<T> =
+  fun <T, I> creationResponse(resource: T, idExtractor: (T) -> I?): ResponseEntity<T> =
     ResponseEntity.created(uriForResource(resource, idExtractor)).build()
 
-  private fun <T> uriForResource(resource: T, idExtractor: (T) -> Long?): URI =
+  fun <T> viewResponse(payload: T): ResponseEntity<T> = ResponseEntity.ok(payload)
+
+  private fun <T, I> uriForResource(resource: T, idExtractor: (T) -> I?): URI =
     ServletUriComponentsBuilder.fromCurrentRequest()
       .path("/{id}")
       .buildAndExpand(idExtractor.invoke(resource).toString())

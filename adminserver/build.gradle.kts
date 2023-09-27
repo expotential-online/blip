@@ -6,20 +6,9 @@ plugins {
 
 dependencies {
   implementation(project(":model"))
-  implementation(libs.h2)
-  implementation(libs.jackson)
-  implementation(libs.jaxb)
-  implementation(libs.jwt)
   implementation(libs.kotlin.reflect)
   implementation(libs.kotlin.stdlib)
-  implementation(libs.starter.admin.client)
-  implementation(libs.starter.jpa)
-  implementation(libs.starter.oauth2.client)
-  implementation(libs.starter.oauth2.resourceserver)
-  implementation(libs.starter.security)
-  implementation(libs.starter.springdoc)
-  implementation(libs.starter.validation)
-  implementation(libs.starter.web)
+  implementation(libs.starter.admin.server)
   implementation(libs.starter.webflux)
 }
 

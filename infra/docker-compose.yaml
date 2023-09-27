@@ -1,0 +1,18 @@
+services:
+  zookeeper:
+    restart: always
+    image: zookeeper:latest
+    ports:
+      - "2181:2181"
+    environment:
+      - ALLOW_ANONYMOUS=yes
+  kafka:
+    restart: always
+    image: wurstmeister/kafka:latest
+    ports:
+      - "9093:9093"
+    environment:
+      - KAFKA_ADVERTISED_HOST_NAME=localhost
+      - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
+    depends_on:
+      - zookeeper

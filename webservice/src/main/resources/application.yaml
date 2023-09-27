@@ -1,0 +1,34 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: blip-webservice
+  boot:
+    admin:
+      client:
+        url: http://localhost:8081
+  security:
+    oauth2:
+      client:
+        provider:
+          keycloak:
+            issuer-uri: http://localhost:9001/realms/blip
+            user-name-attribute: preferred_username
+        registration:
+          keycloak:
+            authorization-grant-type: authorization_code
+            client-id: blip-webservice
+            scope: openid
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:9001/realms/blip
+#keycloak:
+#  use-resource-role-mappings: true
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  info:
+    env:
+      enabled: true

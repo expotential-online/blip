@@ -1,7 +1,7 @@
 package blip.webservice.repo
 
-import blip.model.CohortId
-import blip.model.cohort.Cohort
-import org.springframework.data.jpa.repository.JpaRepository
+import blip.archive.model.cohort.Cohort
+import blip.core.CohortId
+import blip.webservice.Repo
 
-interface CohortRepo : JpaRepository<Cohort, CohortId>
+interface CohortRepo : Repo<Cohort, CohortId>

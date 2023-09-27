@@ -1,6 +1,5 @@
 plugins {
   id("blip-kotlin-conventions")
-  kotlin("plugin.jpa") version "1.9.0"
   kotlin("plugin.spring") version "1.9.0"
 }
 
@@ -10,10 +9,10 @@ dependencies {
   implementation(libs.jackson)
   implementation(libs.jaxb)
   implementation(libs.jwt)
+  implementation(libs.keycloak.authz.client)
   implementation(libs.kotlin.reflect)
   implementation(libs.kotlin.stdlib)
   implementation(libs.starter.admin.client)
-  implementation(libs.starter.jpa)
   implementation(libs.starter.oauth2.client)
   implementation(libs.starter.oauth2.resourceserver)
   implementation(libs.starter.security)
