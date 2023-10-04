@@ -1,12 +1,16 @@
 package blip.webservice.byresource.blip
 
+import blip.core.BlipList
 import blip.resource.blip.Blip
 import blip.resource.blip.CreateBlipCommand
 import blip.resource.blip.toBlip
 import blip.resource.blip.toBlipCreatedEvent
+import blip.resource.person.Person
 import blip.webservice.byresource.person.PersonService
-import blip.webservice.eventbus.EventBus
+import blip.webservice.eventbus.BlipEventChannel.AllBlipEventsChannel
+import blip.webservice.eventbus.InProcessEventBusService
 import jakarta.validation.Valid
+import jakarta.validation.constraints.NotNull
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import org.springframework.validation.annotation.Validated
@@ -17,16 +21,19 @@ import java.security.Principal
 class BlipService(
   @Autowired private val repo: BlipRepo,
   @Autowired private val personService: PersonService,
-  @Autowired private val eventBus: EventBus
+  @Autowired private val eventBusService: InProcessEventBusService
 ) {
 
   fun processCreateBlipCommand(@Valid command: CreateBlipCommand, principal: Principal): Blip {
     val originatingPerson = personService.personOrThrowForPrincipal(principal)
     val entity = command.toBlip(originatingPerson)
     val savedEntity = repo.save(entity)
-    eventBus.postEvent(savedEntity.toBlipCreatedEvent())
+    eventBusService.publishEventToChannel(AllBlipEventsChannel, savedEntity.toBlipCreatedEvent())
     return savedEntity
   }
+
+  fun blipsOriginatedBy(@NotNull person: Person): BlipList =
+    repo.findByOriginator(person)
 
 //  fun register(@Valid dto: BlipDto, principal: Principal): Blip {
 //    val person = personService.personCreateIfNecessary(principal)

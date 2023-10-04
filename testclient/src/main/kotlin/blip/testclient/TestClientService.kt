@@ -5,8 +5,8 @@ import blip.resource.BlipApiVersion.V1_0
 import blip.resource.BlipResourceType
 import blip.resource.BlipResourceType.AgentResource
 import blip.resource.BlipResourceType.AgentTypeResource
-import blip.resource.agent.AgentPostPayload
-import blip.resource.agenttype.AgentTypePostPayload
+import blip.resource.agent.rest.AgentPostPayload
+import blip.resource.agenttype.rest.AgentTypePostPayload
 import blip.testclient.TestUser.AdminUser
 import org.apache.http.impl.client.DefaultHttpClient
 import org.keycloak.authorization.client.AuthzClient
@@ -75,7 +75,7 @@ class TestClientService(
   private fun <T> registerOrCreate(resource: BlipResourceType, payload: T, user: TestUser): String {
     val stepNumber = nextStepNumber.getAndIncrement()
     val token = tokensByUser[user]
-    val url = BlipApi.postUrl(webserviceUrl, V1_0, resource)
+    val url = BlipApi.resourcePostUrl(webserviceUrl, V1_0, resource)
     val headers = HttpHeaders()
     headers.set("Authorization", "Bearer $token")
     val entity = HttpEntity(payload, headers)

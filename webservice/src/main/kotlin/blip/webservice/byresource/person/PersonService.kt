@@ -4,7 +4,8 @@ import blip.resource.person.Person
 import blip.resource.person.RegisterPersonCommand
 import blip.resource.person.toPerson
 import blip.resource.person.toPersonRegisteredEvent
-import blip.webservice.eventbus.EventBus
+import blip.webservice.eventbus.BlipEventChannel.AllPersonEventsChannel
+import blip.webservice.eventbus.InProcessEventBusService
 import jakarta.persistence.EntityNotFoundException
 import jakarta.validation.Valid
 import org.springframework.beans.factory.annotation.Autowired
@@ -16,13 +17,13 @@ import java.security.Principal
 @Validated
 class PersonService(
   @Autowired private val repo: PersonRepo,
-  @Autowired private val eventBus: EventBus
+  @Autowired private val eventBusService: InProcessEventBusService
 ) {
 
   fun processRegisterPersonCommand(@Valid command: RegisterPersonCommand): Person {
     val entity = command.toPerson()
     val savedEntity = repo.save(entity)
-    eventBus.postEvent(savedEntity.toPersonRegisteredEvent())
+    eventBusService.publishEventToChannel(AllPersonEventsChannel, savedEntity.toPersonRegisteredEvent())
     return savedEntity
   }
 

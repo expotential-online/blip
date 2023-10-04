@@ -1,13 +1,14 @@
 package blip.webservice.byresource.agenttype
 
-import blip.core.AgentTypeName
 import blip.resource.BlipResourceType.AgentTypeResource
-import blip.resource.agenttype.AgentType
-import blip.resource.agenttype.RegisterAgentTypeCommand
-import blip.resource.agenttype.SingleAgentTypeQuery
-import blip.resource.agenttype.toAgentType
-import blip.resource.agenttype.toAgentTypeRegisteredEvent
-import blip.webservice.eventbus.EventBus
+import blip.resource.agenttype.AgentTypeId
+import blip.resource.agenttype.codec.toAgentType
+import blip.resource.agenttype.codec.toAgentTypeRegisteredEvent
+import blip.resource.agenttype.command.RegisterAgentTypeCommand
+import blip.resource.agenttype.entity.AgentType
+import blip.resource.agenttype.query.SingleAgentTypeQuery
+import blip.webservice.eventbus.BlipEventChannel.AllAgentTypeEventsChannel
+import blip.webservice.eventbus.InProcessEventBusService
 import blip.webservice.exceptions.BlipExceptions.resourceAlreadyExistsException
 import blip.webservice.exceptions.BlipExceptions.resourceDoesNotExistException
 import jakarta.validation.Valid
@@ -20,7 +21,7 @@ import org.springframework.validation.annotation.Validated
 @Validated
 class AgentTypeService(
   @Autowired private val repo: AgentTypeRepo,
-  @Autowired private val eventBus: EventBus
+  @Autowired private val eventBusService: InProcessEventBusService
 ) {
 
   fun processRegisterAgentTypeCommand(@Valid command: RegisterAgentTypeCommand): AgentType {
@@ -28,7 +29,7 @@ class AgentTypeService(
       throw resourceAlreadyExistsException(AgentTypeResource, "name", command.name)
     val entity = command.toAgentType()
     val savedEntity = repo.save(entity)
-    eventBus.postEvent(savedEntity.toAgentTypeRegisteredEvent())
+    eventBusService.publishEventToChannel(AllAgentTypeEventsChannel, savedEntity.toAgentTypeRegisteredEvent())
     return savedEntity
   }
 
@@ -38,7 +39,7 @@ class AgentTypeService(
     return entity
   }
 
-  fun agentTypeNamed(name: AgentTypeName): AgentType? {
-    return repo.findByNameEqualsIgnoreCase(name)
+  fun agentTypeWithId(id: AgentTypeId): AgentType? {
+    return repo.findByIdOrNull(id)
   }
 }

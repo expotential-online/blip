@@ -8,4 +8,13 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/$V1_0/$MeResources")
 class MeController {
+
+//  @GetMapping("/originated")
+//  fun onGetOriginated(principal: Principal): Flux<BlipList> {
+//    val person = personFor(principal)
+//    blipService.blipsOriginatedBy(person)
+//  }
+//
+//  private fun personFor(principal: Principal): Person =
+//    personService.personCreateIfNecessary(principal)
 }

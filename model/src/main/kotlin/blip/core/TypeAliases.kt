@@ -2,12 +2,6 @@ package blip.core
 
 import blip.resource.blip.Blip
 
-typealias AgentId = Long
-typealias AgentName = String
-
-typealias AgentTypeId = Long
-typealias AgentTypeName = String
-
 typealias BlipId = Long
 typealias BlipSummary = String
 typealias BlipList = List<Blip>

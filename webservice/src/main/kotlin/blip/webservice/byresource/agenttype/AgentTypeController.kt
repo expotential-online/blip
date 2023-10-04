@@ -1,14 +1,14 @@
 package blip.webservice.byresource.agenttype
 
-import blip.core.AgentTypeId
 import blip.resource.BlipApiVersion.UrlParts.V1_0
 import blip.resource.BlipResourceType.UrlParts.AgentTypeResources
-import blip.resource.agenttype.AgentType
-import blip.resource.agenttype.AgentTypeGetResponse
-import blip.resource.agenttype.AgentTypePostPayload
-import blip.resource.agenttype.SingleAgentTypeQuery
-import blip.resource.agenttype.toAgentTypeGetResponse
-import blip.resource.agenttype.toRegisterAgentTypeCommand
+import blip.resource.agenttype.AgentTypeId
+import blip.resource.agenttype.codec.toAgentTypeGetResponse
+import blip.resource.agenttype.codec.toRegisterAgentTypeCommand
+import blip.resource.agenttype.entity.AgentType
+import blip.resource.agenttype.query.SingleAgentTypeQuery
+import blip.resource.agenttype.rest.AgentTypeGetResponse
+import blip.resource.agenttype.rest.AgentTypePostPayload
 import blip.webservice.ResponseHelper.creationResponse
 import blip.webservice.ResponseHelper.viewResponse
 import blip.webservice.security.Roles.ADMINISTRATOR

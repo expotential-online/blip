@@ -1,6 +1,8 @@
 package blip.webservice.config
 
+import blip.webservice.security.KeycloakClaim.RealmAccess
 import blip.webservice.security.KeycloakLogoutHandler
+import blip.webservice.security.claimFromEnum
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -53,9 +55,10 @@ class SecurityConfig(
   }
 
   private fun authorities(jwt: Jwt): Collection<GrantedAuthority> {
-    @Suppress("UNCHECKED_CAST")
-    val realmAccess: Map<String, Collection<String>> = jwt.claims["realm_access"] as Map<String, Collection<String>>
-    val roles = realmAccess["roles"]
-    return roles!!.map { SimpleGrantedAuthority("ROLE_$it") }.toList()
+    return jwt.claimFromEnum<Map<String, Collection<String>>>(RealmAccess)
+      ?.get("roles")
+      ?.map { SimpleGrantedAuthority("ROLE_$it") }
+      ?.toList()
+      ?: listOf()
   }
 }

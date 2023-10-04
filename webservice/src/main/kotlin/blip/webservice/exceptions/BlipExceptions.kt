@@ -16,21 +16,21 @@ object BlipExceptions {
   private fun resourceAlreadyExistsMessage(
     resource: BlipResourceType,
     propertyName: String,
-    propertyValue: String
+    propertyValue: Any
   ): String =
     "${resource.capitalisedSingularName} already exists with $propertyName [$propertyValue]"
 
   fun resourceDoesNotExistException(
     resource: BlipResourceType,
     propertyName: String,
-    propertyValue: String
+    propertyValue: Any
   ): EntityNotFoundException =
     EntityNotFoundException(resourceDoesNotExistMessage(resource, propertyName, propertyValue))
 
   private fun resourceDoesNotExistMessage(
     resource: BlipResourceType,
     propertyName: String,
-    propertyValue: String
+    propertyValue: Any
   ): String =
     "No ${resource.capitalisedSingularName} exists with $propertyName [$propertyValue]"
 }
